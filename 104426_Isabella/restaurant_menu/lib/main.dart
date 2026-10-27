@@ -26,13 +26,13 @@ class FoodItem {
   final String name;
   final String price;
   final String description;
-  final IconData icon;
+  final String imagePath;
 
   const FoodItem({
     required this.name,
     required this.price,
     required this.description,
-    required this.icon,
+    required this.imagePath,
   });
 }
 
@@ -45,19 +45,19 @@ class MenuScreen extends StatelessWidget {
       name: 'Classic Beef Burger',
       price: 'RM 18.50',
       description: 'Juicy grilled beef patty topped with fresh lettuce, cheddar cheese, tomatoes, and house special sauce in a toasted brioche bun.',
-      icon: Icons.lunch_dining,
+      imagePath: 'assets/Beef-Burger-The-Tasteful-Pantry.jpg',
     ),
     FoodItem(
       name: 'Margherita Pizza',
       price: 'RM 24.00',
       description: 'Traditional Italian pizza topped with rich tomato sauce, fresh mozzarella, aromatic basil leaves, and a drizzle of olive oil.',
-      icon: Icons.local_pizza,
+      imagePath: 'assets/margherita-pizza-resize-8-1.jpg',
     ),
     FoodItem(
       name: 'Creamy Carbonara Pasta',
       price: 'RM 21.00',
       description: 'Spaghetti tossed in a velvety sauce made of egg yolks, Parmesan cheese, crispy beef bacon, and freshly cracked black pepper.',
-      icon: Icons.ramen_dining,
+      imagePath: 'assets/carbonara.jpg',
     ),
   ];
 
@@ -82,13 +82,22 @@ class MenuScreen extends StatelessWidget {
             ),
             child: ListTile(
               contentPadding: const EdgeInsets.all(16.0),
-              leading: CircleAvatar(
-                radius: 28,
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                child: Icon(
-                  item.icon,
-                  size: 32,
-                  color: Theme.of(context).colorScheme.primary,
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  item.imagePath,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 60,
+                    height: 60,
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: Icon(
+                      Icons.fastfood,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
                 ),
               ),
               title: Text(
@@ -111,7 +120,6 @@ class MenuScreen extends StatelessWidget {
               ),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Navigation to Detail Screen (Extra Task)
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -145,14 +153,24 @@ class FoodDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 20),
-            CircleAvatar(
-              radius: 60,
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              child: Icon(
-                foodItem.icon,
-                size: 70,
-                color: Theme.of(context).colorScheme.primary,
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: Image.asset(
+                foodItem.imagePath,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  height: 200,
+                  width: double.infinity,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: Icon(
+                    Icons.fastfood,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 24),
